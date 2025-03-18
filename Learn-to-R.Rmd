@@ -1,12 +1,17 @@
 ---
 title: "Learn to R"
-output: html_notebook
+output: html_document
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 This document serves as an accompanying material to live BRC R programming sessions.
 
 # Before we begin
-Make sure you have R and RStudio installed and that you can launch them. Once in RStudio, go to "*Tools > Global Options...*". Under the *General* tab in the *Workspace* section untick "Restore .RData into workspace at startup" and set "Save workspace to .RData on exit" to *Never*.
+
+Make sure you have R and RStudio installed and that you can launch them. Once in RStudio, go to "*Tools \> Global Options...*". Under the *General* tab in the *Workspace* section untick "Restore .RData into workspace at startup" and set "Save workspace to .RData on exit" to *Never*.
 
 # 1. What is R
 
@@ -16,60 +21,72 @@ When running R code, the source code is inserted into the **R console** and subs
 
 # 2. Let's run some code
 
-The "**>**" symbol in R console means that the interpreter is ready and waiting for our commands. Let's run some code.
+The "**\>**" symbol in R console means that the interpreter is ready and waiting for our commands. Let's run some code.
+
 ```{r}
 print("Hello World!")
 ```
 
 We've just run our first command. We used the `print()` function and passed it the string "Hello World!" as an argument. The output of this command appeared immediately afterwards on the console. Great! Almost everything we run in R is a function. Now let's try something else.
+
 ```{r}
 a <- 1
 ```
-It looks like nothing happened, but when we look at the R console, we can see the prompt (>) is there and ready for more commands. This means that the command has finished. This command is very different from the previous one. Unlike `print()`, this one has no output, so the console didn't display anything. 
+
+It looks like nothing happened, but when we look at the R console, we can see the prompt (\>) is there and ready for more commands. This means that the command has finished. This command is very different from the previous one. Unlike `print()`, this one has no output, so the console didn't display anything.
 
 `<-` in the command is the assignment operator. It looks like an arrow pointing toward the left-hand side and is created by typing the lesser-than symbol followed by the minus symbol. It is an often-used combination so there is a keyboard shortcut for it in RStudio (*Alt+-*). The assignment operator tells the computer to take what is on the right-hand side and assign it to what is on the left-hand side.
 
 We have just asked the computer to reserve a bit of memory, assign it the label `a` and then give it the value of **1**. In our case, `a` is a variable. It will now stay saved in the environment until we restart the R interpreter or until we remove `a`. It is very much like pressing *1* and then *M+* on a calculator.
 
 Could we achieve the same with a function? The `<-` operator is actually a function as well. And it takes two arguments. The first argument is the name of the variable and the second argument is the value. Let's try this out.
+
 ```{r}
 # The `<-` operator is actually a function
 `<-`("a", 1)
 ```
+
 This is definitely not the preferred way to use `<-`, but it achieves exactly the same thing. We had to add a few quotes to make it work, but don't worry about that for now.
 
 # 3. Getting help
+
 If you ever feel lost and don't know how something works, there are a few things you can do.
 
- + Use R online help. Use the `help(topic)` function and give it a topic to explore. It can also be accessed by using `?topic`
-```{r}
+-   Use R online help. Use the `help(topic)` function and give it a topic to explore. It can also be accessed by using `?topic`
+
+```{r eval=FALSE, include=TRUE}
 # help(topic)
 help("print")
 # ?topic
 ?print
 ```
 
- + Search online. Use documentation or your favourite AI assistant.
- + Ask on forums. [Stack overflow](https://stackoverflow.com/questions) is an excellent resource.
- 
+-   Search online. Use documentation or your favourite AI assistant.
+-   Ask on forums. [Stack overflow](https://stackoverflow.com/questions) is an excellent resource.
+
 ### Exercise
 
- 1. Try running `help()` on `help` itself: `help("help")`   
- 1. What happens if you run just `help()`?
+1.  Try running `help()` on `help` itself: `help("help")`\
+2.  What happens if you run just `help()`?
 
 # 4. Classes
+
 In R, there are several basic classes that dictate what can be done with a value. Mathematical operations can be done with numbers but not with text, for example. The 6 basic classes in R are **character, numeric, integer, logical, complex, raw**. We can find out what class a variable is by running `class(variable)`.
 
 Variables can be converted between the different classes. This is called **casting** and is typically done by using one of the `as.class` functions.
 
 ### Character
+
 Notice that in our very first command, we used double quotes to enclose the message. That's because we worked with text. A sequence of characters is often called a **string** in programming. In R, the string class is called **character** and is surrounded by double quotes `"` or by single quotes `'`.
+
 ```{r}
 text <- "Hello"
 class(text)
 ```
+
 Characters can also be created by converting from other classes using `as.character()`. Note that characters that look like numbers are still characters (text) and cannot be used in mathematical operations.
-```{r}
+
+```{r eval=FALSE, include=TRUE}
 # Cast a numeric to a character
 text <- as.character(1)
 class(text)
@@ -78,12 +95,16 @@ text + 1
 ```
 
 ### Numeric
-Real numbers (both whole and decimal) are represented by the **numeric** class. 
+
+Real numbers (both whole and decimal) are represented by the **numeric** class.
+
 ```{r}
 number <- 1
 class(number)
 ```
+
 Variables can be converted to numeric using `as.numeric()` if such conversion makes sense. Be careful, some conversions would not make sense to a human, but are perfectly acceptable for a computer.
+
 ```{r}
 # Create a character
 text <- "123"
@@ -91,8 +112,11 @@ text <- "123"
 number <- as.numeric(text)
 class(number)
 ```
+
 ### Integer
+
 **Integer** class is used to represent whole numbers only. They can be created by using the `as.integer()` function or by appending "**L**" to a number.
+
 ```{r}
 # Create an integer
 int <- 1L
@@ -101,10 +125,13 @@ class(int)
 int <-  as.integer(1)
 class(int)
 ```
+
 **Integers** have some limitations compared to **numeric** and are generally only useful when our R code needs to interact with other programming languages or when memory efficiency is of concern.
 
 ### Logical
+
 **Logical** class is used to represent Boolean values (**TRUE** and **FALSE**).
+
 ```{r}
 # Create a logical
 coding_is_great <- TRUE
@@ -112,6 +139,7 @@ class(coding_is_great)
 ```
 
 ### Complex
+
 The **complex** class is used to represent complex numbers.
 
 ```{r}
@@ -124,63 +152,70 @@ complex <- complex(real = 1, imaginary = 5)
 ```
 
 ### Raw
+
 The **raw** class represents binary data and is used for handling raw bytes.
 
 ### Missing values, NaN
-**Missing values** in R are represented by the `NA` value. If a value is missing, we simply have no information about it. We do not know what value it has or even what type it is. Any operations done on `NA` therefore result in `NA`. The `is.na()` function is able to check whether a value is a missing value.
-`NaN` is a short-hand for "not a number". It is the result of undefined mathematical operations, for example `0/0`. Both `is.nan()` and `is.na()` recognise `NaN` as a missing value.
 
+**Missing values** in R are represented by the `NA` value. If a value is missing, we simply have no information about it. We do not know what value it has or even what type it is. Any operations done on `NA` therefore result in `NA`. The `is.na()` function is able to check whether a value is a missing value. `NaN` is a short-hand for "not a number". It is the result of undefined mathematical operations, for example `0/0`. Both `is.nan()` and `is.na()` recognise `NaN` as a missing value.
 
 ### Exercise
 
-1. Try converting various decimal numbers to integer class and check the results.
-1. Try using the `is.character()` function on a variable to see if it is a character.
-1. Once you have an answer, check what the class of the answer is.
-1. Can you convert a numeric to a logical? What about a logical to a numeric?
-1. Test if a value is `NA` with `is.na()`.
-1. Compare the output of `NA == NA` to `is.na(NA)`.
+1.  Try converting various decimal numbers to integer class and check the results.
+2.  Try using the `is.character()` function on a variable to see if it is a character.
+3.  Once you have an answer, check what the class of the answer is.
+4.  Can you convert a numeric to a logical? What about a logical to a numeric?
+5.  Test if a value is `NA` with `is.na()`.
+6.  Compare the output of `NA == NA` to `is.na(NA)`.
 
 # 5. Operators
+
 An **operator** is a symbol or a function that performs operations on one or more variables or values. We have already used the assignment operator `<-` to assign a value to a variable. Operators allow us to perform arithmetic calculations, make comparisons, or apply logical operations. Below are some commonly used arithmetic, comparison and logical operators.
 
 ### Arithmetic operators
-| Operator  | Action                  | Example               |
-|:---------:|:-----------------------:|:---------------------:|
-| `+`       | Addition                | `1 + 1`               |
-| `-`       | Subtraction             | `1 - 1`               |
-| `*`       | Multiplication          | `2 * 3`               |
-| `/`       | Division                | `6 / 3`               |
-| `^` / `**`| Exponentiation          | `2 ^ 3`               |
-| `%%`      | Modulus                 | `5 %% 2`              |
-| `%/%`     | Integer Division        | `5 %/% 2`             |
+
+|  Operator  |      Action      |  Example  |
+|:----------:|:----------------:|:---------:|
+|    `+`     |     Addition     |  `1 + 1`  |
+|    `-`     |   Subtraction    |  `1 - 1`  |
+|    `*`     |  Multiplication  |  `2 * 3`  |
+|    `/`     |     Division     |  `6 / 3`  |
+| `^` / `**` |  Exponentiation  |  `2 ^ 3`  |
+|    `%%`    |     Modulus      | `5 %% 2`  |
+|   `%/%`    | Integer Division | `5 %/% 2` |
 
 ### Comparison operators
-| Operator  | Action                  | Example               |
-|:---------:|:-----------------------:|:---------------------:|
-| `==`      | Equal to                | `1 == 1`, `"a" == "a"`|
-| `!=`      | Not equal to            | `2 != 3`, `"a" != "b"`|
-| `<`       | Less than               | `2 < 3`,  `"a" < "b"` |
-| `<=`      | Less than or equal to   | `2 <= 3`, `"1" <= "2"`|
-| `>`       | Greater than            | `3 > 2`,  `"5" > "2"` |
-| `>=`      | Greater than or equal to| `3 >= 2`, `"a" >= "2"`|
+
+| Operator |          Action          |        Example         |
+|:--------:|:------------------------:|:----------------------:|
+|   `==`   |         Equal to         | `1 == 1`, `"a" == "a"` |
+|   `!=`   |       Not equal to       | `2 != 3`, `"a" != "b"` |
+|   `<`    |        Less than         |  `2 < 3`, `"a" < "b"`  |
+|   `<=`   |  Less than or equal to   | `2 <= 3`, `"1" <= "2"` |
+|   `>`    |       Greater than       |  `3 > 2`, `"5" > "2"`  |
+|   `>=`   | Greater than or equal to | `3 >= 2`, `"a" >= "2"` |
 
 ### Logical operators
-| Operator  | Action                  | Example               |
-|:---------:|:-----------------------:|:---------------------:|
-| `&`       | Element-wise AND        | `TRUE & TRUE`         |
-| `|`       | Element-wise OR         | `TRUE | FALSE`        |
-| `!`       | Logical NOT             | `!FALSE`              |
-| `%in%`    | Membership              | `1 %in% c(1,2,3)`     |
+
+| Operator |      Action      |      Example      |
+|:--------:|:----------------:|:-----------------:|
+|   `&`    | Element-wise AND |   `TRUE & TRUE`   |
+|   `|`    | Element-wise OR  |  `TRUE | FALSE`   |
+|   `!`    |   Logical NOT    |     `!FALSE`      |
+|  `%in%`  |    Membership    | `1 %in% c(1,2,3)` |
 
 ### Exercise
-1. Imagine R is a calculator. Use arithmetic operators with numeric variables.
-1. Practice using comparison operators. What class is the answer?
-1. Try using arithmetic operators on characters.
-1. Use comparison operators on characters and on characters representing numbers, e.g. `"a" < "1"`.
-1. Use comparison operators to compare characters to numerics. What happened? Why?
+
+1.  Imagine R is a calculator. Use arithmetic operators with numeric variables.
+2.  Practice using comparison operators. What class is the answer?
+3.  Try using arithmetic operators on characters.
+4.  Use comparison operators on characters and on characters representing numbers, e.g. `"a" < "1"`.
+5.  Use comparison operators to compare characters to numerics. What happened? Why?
 
 # 6. Collections
+
 ### Vectors
+
 A **vector** is an **ordered collection** of values of the **same type**. `Character`, `numeric`, `integer` and `logical` can all form vectors. In fact, when we ran `a <- 1`, `a` is actually a numeric vector that has only one value (it's length equals 1).
 
 A vector is created using the `c()` function. Values of a vector can then be accessed using numeric or logical vectors with the `[[]]` (for a single value only) or `[]` notation. This is called **vector indexing**, **slicing** or **subsetting**.
@@ -199,13 +234,16 @@ character_vector <- c("a", "b", "c", "d", "e")
 # access values of a character vector using a logical vector
 character_vector[c(TRUE, FALSE, TRUE, FALSE, TRUE)]
 ```
+
 If the slicing vector is shorter than the sliced vector, then the shorter vector will be "recycled" to accommodate for that. **Vector recycling** also applies to some operations done on vectors.
+
 ```{r}
 # vector recycling
 character_vector[c(TRUE, FALSE)]
 ```
 
 ### List
+
 A list is an **ordered collection** of objects of **any type**. A list is created using the `list()` function. Objects in a list can accesssed using the `[[]]` or `[]` notation, similar to vectors. However, `[]` in this case always returns a list. For extracting the actual values, `[[]]` is appropriate.
 
 **Named lists** can be created with `list(name = value)` or by adding the names to an existing list `names(list) <- c("name1", "name2")`. Values in named lists can be accessed with `$` followed by their names.
@@ -213,8 +251,8 @@ A list is an **ordered collection** of objects of **any type**. A list is create
 ```{r}
 # create a list
 a_list <- list(
-  c(1,2,3,4,5),
-  c("a","b","c"),
+  c(1, 2, 3, 4, 5),
+  c("a", "b", "c"),
   TRUE)
 
 # create a named list
@@ -222,7 +260,7 @@ a_list <- list(
   numbers = c(1, 2, 3, 4, 5),
   letters = c("a", "b", "c"),
   logicals = TRUE
-  )
+)
 
 # add names to an existing list
 names(a_list) <- c("numbers", "letters", "logicals")
@@ -234,7 +272,160 @@ a_list$logicals
 ```
 
 ### Exercise
-1. Practice creating vectors of different types and accessing their values.
-1. Now do the same with a list and a named list.
-1. Practice different operations on vectors. For example `c(1, 2, 3) + c(3, 2, 1)`.
 
+1.  Practice creating vectors of different types and accessing their values.
+1.  Now do the same with a list and a named list.
+1.  Practice different operations on vectors. For example `c(1, 2, 3) + c(3, 2, 1)`.
+
+# 7. Flow control
+
+**Flow control** structures determine the order of execution of statements based on **loops** and **conditional execution**.
+
+### Conditional execution
+
+The `if` statement executes a block of code only if a condition is `TRUE`. It effectively allows for **branching** code. It uses a slightly different syntax from what we've been using until now.
+
+```{r}
+coding_is_great <- TRUE
+if (coding_is_great) {
+  # the condition is TRUE, therefore the below code executes
+  print("This code executed")
+}
+
+x <- 1
+false_condition <- x > 5
+if (false_condition) {
+  # the condition is FALSE, therefore the below does not execute
+  print("This code does not execute")
+}
+```
+
+`if` statements can be nested, i.e. one statement can be put inside another one. However, a better option is to use `else if` and `else` statements for more complex logic.
+
+```{r echo=TRUE}
+FEV1 <- 60 # FEV1 as % predicted
+if (FEV1 >= 80) {
+  print("GOLD 1 (Mild)")
+} else if (FEV1 >= 50) {
+  print("GOLD 2 (Moderate)")
+} else if (FEV1 >= 30) {
+  print("GOLD 3 (Severe)")
+} else {
+  print("GOLD 4 (Very Severe)")
+}
+```
+
+### `for` loops
+`for` loops are used for iterating over collections, such as vectors or lists. They allow for executing a block of code multiple times, once for each object in the sequence.
+
+```{r}
+colours <- c("Red", "Green", "Blue")
+# iterate over colours and execute a block of code for each object in colours
+for (colour in colours) {
+  message <- paste(colour, "is a colour.")
+  print(message)
+}
+```
+In the above code, we first defined a character vector `colours`. Then we iterated over `colours` in a `for` loop. Our `colours` vector has three values so the loop runs three times in total. `colour` is a newly-defined variable and takes a different value in every iteration.
+
+Loops make it very easy to change the code run for each iteration. Compared to copying, pasting and modifying a block of code, a loop is often easier to read, less error-prone and easier to change.
+
+### `while` loops
+`while` loops are used to repeatedly execute a block of code for **as long as a condition is `TRUE`**. They are useful when the exact **number of iterations is unknown** beforehand.  However, because a condition may never stop being true, this creates a potential for an infinite loop.
+
+```{r}
+cell_count <- 1
+target_number <- 1000
+cell_cycles <- 0
+# continue growing more cells until the cell count reaches the target number
+while (cell_count <= target_number) {
+  cell_count <- cell_count * 2
+  cell_cycles <- cell_cycles + 1
+  message <- paste("Number of cells after cycle ",
+                   cell_cycles,
+                   ": ",
+                   cell_count,
+                   sep = "")
+  print(message)
+}
+```
+
+### `break` and `next` statements
+Loops can further be controlled by the `break` and `next` statements. The `break` statement is used to **immediately exit** a loop. It stops the execution of the loop and moves to the next line of code outside the loop.
+
+The `next` statement is used to **skip the current interation** of a loop and move on to the next one.
+
+```{r eval=FALSE, include=TRUE}
+# Count from 1 - 5, but skip number 3
+for (i in 1:5) {
+  if (i == 3) {
+    next  # When i == 3, no message is printed, but the loop continues
+  }
+  print(i)
+}
+
+# Count from 1 - 5, but stop early
+for (i in 1:5) {
+  if (i == 3) {
+    break  # When i == 3, the loop stops completely. Number 3 is not printed
+  }
+  print(i)
+}
+```
+
+# 8. Functions
+So far we've been using functions that are included with base R. But we can also write our own functions in R. Normally, when we run a function, we use the name of the function followed by `()`. We can *pass* one or more **arguments** to a function by putting them inside the `()`. Operators mentioned earlier are actually implemented using functions. Let's try that.
+
+```{r}
+"+"(1, 2)
+```
+In this case, `+` is the function name, `1` is the first argument and `2` is the second argument. Note that this is different from if we passed a numeric vector `c(1, 2)` as the first argument. `+` is enclosed in quotes to differentiate `+` as a **function call** from `+` used as an **operator**. Let's create our own function now.
+
+```{r}
+say_hello <- function (name) {
+  message <- paste("Hello ", name, "!", sep = "")
+  print(message)
+}
+say_hello("stranger")
+```
+We created a function `say_hello` which takes one **argument** - `name`. It then uses that argument to print a message. We can also set a **default value** for an argument. That way, if we don't pass any argument to the function, it will use the default value.
+
+```{r}
+# The same function, but now with a default value for `name`
+say_hello <- function (name = "stranger") {
+  message <- paste("Hello ", name, "!", sep = "")
+  print(message)
+}
+# We don't have to pass `name` now as name has a default value
+say_hello()
+```
+When we used functions earlier, we could assign the output of the function to a variable. For example, the following line: `message <- paste("Hello ", name, "!", sep = "")` creates `message` and assigns the output of `paste` to it. Functions implicitly **return** (output) the **last line** that they executed. Some functions return `NA`, or a number that indicates whether they ran successfully. Let's see what our function returns.
+
+```{r}
+returned_value <- say_hello()
+# Check returned value
+returned_value
+```
+It turns out that our function returns the message that it prints. That is because `print()` returns the message that it prints and `print(message)` is the last line in our function that ran.
+
+We can make our function return something else with `return()`. When `return()` is executed, the function stops executing and returns the argument of `return()`. This can be useful for stopping execution early, e.g. when checking some assumptions necessary for the function. 
+
+```{r}
+# The same function, but now with a default value for `name`
+say_hello <- function (name = "stranger") {
+  message <- paste("Hello ", name, "!", sep = "")
+  print(message)
+  # explicitly return NA
+  return(NA)
+}
+returned_value <- say_hello()
+# Check returned value
+returned_value
+```
+
+### Exercise
+1. Practice conditional execution with `if`.
+1. Practice looping with both `while` and `for`. If you are trapped in an infinite loop, press <Esc> to stop execution.
+1. Create a simple function with one or more arguments. Set a default value for at least one of the arguments and experiment with `return()`.
+1. Write a `countdown()` function that takes one argument. It should count down to 0, printing the current number and waiting for one second between each. When the number reaches 0, have it print "Liftoff!".
+1. What happens if you pass `0` to your `countdown()` function? What if you pass `-1`, `"a"`, `NA`, `10.1`, `c(1, 2.5)`? Use what you've learnt to try and improve your countdown function to handle some of these cases. It can refuse to run and/or print a helpful message.
